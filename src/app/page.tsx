@@ -1,5 +1,6 @@
 import "./globals.css";
 import Taskbar from "./components/Taskbar";
+import Terminal from "./components/Terminal";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       style={{ backgroundImage: "url(/images/wallpaper.jpg)" }}
     >
       <Taskbar />
+      <Terminal />
     </main>
   );
 }
