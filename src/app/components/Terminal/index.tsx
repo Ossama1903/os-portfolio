@@ -1,9 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import Draggable from "react-draggable";
 
 interface Command {
   command: string;
   directory: string;
+  response: string;
+  color: string;
 }
 
 export default function Terminal() {
@@ -52,7 +55,12 @@ export default function Terminal() {
       } else {
         setCommandHistory([
           ...commandHistory,
-          { directory: directoryPath, command: inputValue },
+          {
+            directory: directoryPath,
+            command: inputValue,
+            response: "zaza",
+            color: "text-yellow-200",
+          },
         ]);
       }
     }
@@ -61,41 +69,46 @@ export default function Terminal() {
   };
 
   return (
-    <div className="absolute top-10 left-10 w-[80%] h-[80%] rounded-lg shadow-lg">
-      <div className="bg-black rounded-t-lg py-1">
-        <div className="flex py-2 px-1">
-          <div className="w-3 h-3 bg-red-500 rounded-[50%] mx-1" />
-          <div className="w-3 h-3 bg-yellow-500 rounded-[50%] mx-1" />
-          <div className="w-3 h-3 bg-green-500 rounded-[50%] mx-1" />
+    <Draggable handle=".drag-handle">
+      <div className="absolute top-10 left-10 w-[80%] h-[80%] rounded-lg shadow-lg">
+        <div className="bg-black rounded-t-lg py-1 cursor-default drag-handle">
+          <div className="flex py-2 px-1">
+            <div className="w-3 h-3 bg-red-500 rounded-[50%] mx-1" />
+            <div className="w-3 h-3 bg-yellow-500 rounded-[50%] mx-1" />
+            <div className="w-3 h-3 bg-green-500 rounded-[50%] mx-1" />
+          </div>
         </div>
-      </div>
-      <div
-        ref={scrollRef}
-        className="h-full bg-gray-800 p-2 rounded-b-lg overflow-auto custom-scrollbar"
-      >
-        {commandHistory.map((command, index) => (
-          <div key={index} className="text-white flex flex-wrap">
-            <span>{command.directory}</span>
+        <div
+          ref={scrollRef}
+          className="h-full bg-gray-800 p-2 rounded-b-lg overflow-auto custom-scrollbar"
+        >
+          {commandHistory.map((command, index) => (
+            <>
+              <div key={index} className="text-white flex flex-wrap">
+                <span>{command.directory}</span>
+                <textarea
+                  defaultValue={command.command.trim()}
+                  readOnly
+                  className="flex-1 text-yellow-200 bg-transparent border-none focus:outline-none resize-none ml-2 overflow-hidden"
+                  style={{ minHeight: "1.5rem" }}
+                />
+              </div>
+              <span className={command.color}>{command.response}</span>
+            </>
+          ))}
+          <div className="text-white flex flex-wrap">
+            <span>{directoryPath}</span>
             <textarea
-              defaultValue={command.command.trim()}
-              readOnly
+              ref={textareaRef}
+              value={inputValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className="flex-1 text-yellow-200 bg-transparent border-none focus:outline-none resize-none ml-2 overflow-hidden"
               style={{ minHeight: "1.5rem" }}
             />
           </div>
-        ))}
-        <div className="text-white flex flex-wrap">
-          <span>{directoryPath}</span>
-          <textarea
-            ref={textareaRef}
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            className="flex-1 text-yellow-200 bg-transparent border-none focus:outline-none resize-none ml-2 overflow-hidden"
-            style={{ minHeight: "1.5rem" }}
-          />
         </div>
       </div>
-    </div>
+    </Draggable>
   );
 }
