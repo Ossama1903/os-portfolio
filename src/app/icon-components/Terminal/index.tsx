@@ -1,11 +1,11 @@
 "use client";
 import Icon from "@/app/components/Icon";
 
-export default function Terminal() {
-  const clickHandler = () => {
-    console.log("terminal clicked");
-  };
+interface TerminalProps {
+  clickHandler: () => void;
+}
 
+export default function Terminal({ clickHandler }: TerminalProps) {
   return (
     <Icon
       clickHandler={clickHandler}

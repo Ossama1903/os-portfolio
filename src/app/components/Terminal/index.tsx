@@ -38,17 +38,25 @@ export default function Terminal() {
   };
 
   const executeCommand = () => {
+    const trimmedInput = inputValue.trim();
+
     if (
-      inputValue.toLowerCase() === "cls" ||
-      inputValue.toLowerCase() == "clear"
+      trimmedInput.toLowerCase() === "cls" ||
+      trimmedInput.toLowerCase() === "clear"
     ) {
       setCommandHistory([]);
     } else {
-      setCommandHistory([
-        ...commandHistory,
-        { directory: directoryPath, command: inputValue },
-      ]);
+      if (trimmedInput.startsWith("cd ")) {
+        const newPath = trimmedInput.slice(3).trim();
+        setDirectoryPath(`user@macbook ${newPath} %`);
+      } else {
+        setCommandHistory([
+          ...commandHistory,
+          { directory: directoryPath, command: inputValue },
+        ]);
+      }
     }
+
     setInputValue("");
   };
 

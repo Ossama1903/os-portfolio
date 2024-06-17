@@ -29,7 +29,7 @@ export default function Icon({
         </div>
       )}
       <Image
-        onDoubleClick={clickHandler}
+        onClick={clickHandler}
         onTouchEnd={clickHandler}
         src={imageSource}
         alt={alt}
