@@ -4,6 +4,7 @@ import "./globals.css";
 import Taskbar from "./components/Taskbar";
 import Terminal from "./components/Terminal";
 import { useState } from "react";
+import Contact from "./components/Contact";
 
 export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState<boolean>(false);
@@ -25,6 +26,7 @@ export default function Home() {
         setIsReadMeOpen={setIsReadMeOpen}
       />
       {isTerminalOpen && <Terminal />}
+      {isContactOpen && <Contact />}
     </main>
   );
 }

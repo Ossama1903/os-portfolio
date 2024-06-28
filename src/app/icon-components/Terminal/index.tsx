@@ -9,10 +9,10 @@ export default function Terminal({ clickHandler }: TerminalProps) {
     <Icon
       clickHandler={clickHandler}
       imageSource="/images/terminal.png"
-      alt="resume"
+      alt="terminal"
       width={41}
       height={41}
-      hoverText="Resume"
+      hoverText="Terminal"
     />
   );
 }

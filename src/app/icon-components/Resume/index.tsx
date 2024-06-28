@@ -9,10 +9,10 @@ export default function Resume({ clickHandler }: ResumeProps) {
     <Icon
       clickHandler={clickHandler}
       imageSource="/images/resume.png"
-      alt="terminal"
+      alt="resume"
       width={38}
       height={38}
-      hoverText="Terminal"
+      hoverText="Résumé"
     />
   );
 }
