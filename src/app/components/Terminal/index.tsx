@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Draggable from "react-draggable";
+import commands from "@/app/utils/commands";
+import directories from "@/app/utils/directories";
 
 interface Command {
   command: string;
@@ -14,7 +16,7 @@ export default function Terminal() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [commandHistory, setCommandHistory] = useState<Command[]>([]);
-  const [directoryPath, setDirectoryPath] = useState("user@macbook ~ %");
+  const [directoryPath, setDirectoryPath] = useState("home");
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -42,8 +44,20 @@ export default function Terminal() {
 
   const executeCommand = () => {
     const trimmedInput = inputValue.trim();
+    const commandParts = trimmedInput.split(" ");
+    const baseCommand = commandParts[0].toLowerCase();
 
-    if (
+    if (!commands.includes(baseCommand)) {
+      setCommandHistory([
+        ...commandHistory,
+        {
+          directory: directoryPath,
+          command: inputValue,
+          response: `'${trimmedInput}' is not recognized as a valid command`,
+          color: "text-red-500",
+        },
+      ]);
+    } else if (
       trimmedInput.toLowerCase() === "cls" ||
       trimmedInput.toLowerCase() === "clear"
     ) {
@@ -51,7 +65,32 @@ export default function Terminal() {
     } else {
       if (trimmedInput.startsWith("cd ")) {
         const newPath = trimmedInput.slice(3).trim();
-        setDirectoryPath(`user@macbook ${newPath} %`);
+        console.log("current path", directoryPath);
+        const possibleDirectories = Object.keys(
+          directories[directoryPath] || {}
+        );
+        if (possibleDirectories.includes(newPath)) {
+          setCommandHistory([
+            ...commandHistory,
+            {
+              directory: directoryPath,
+              command: inputValue,
+              response: ``,
+              color: "",
+            },
+          ]);
+          setDirectoryPath((prev) => `${prev}/${newPath}`);
+        } else {
+          setCommandHistory([
+            ...commandHistory,
+            {
+              directory: directoryPath,
+              command: inputValue,
+              response: `Cannot find path ${newPath} in the pwd`,
+              color: "text-red-500",
+            },
+          ]);
+        }
       } else {
         setCommandHistory([
           ...commandHistory,
@@ -85,19 +124,34 @@ export default function Terminal() {
           {commandHistory.map((command, index) => (
             <>
               <div key={index} className="text-white flex flex-wrap">
-                <span>{command.directory}</span>
+                <span>
+                  user@macbook{" "}
+                  {command.directory === "home"
+                    ? "~"
+                    : command.directory.split("/")[
+                        command.directory.length - 1
+                      ]}{" "}
+                  %
+                </span>
                 <textarea
                   defaultValue={command.command.trim()}
                   readOnly
-                  className="flex-1 text-yellow-200 bg-transparent border-none focus:outline-none resize-none ml-2 overflow-hidden"
-                  style={{ minHeight: "1.5rem" }}
+                  className="flex-1 text-yellow-200 bg-transparent border-none focus:outline-none resize-none ml-2 overflow-hidden h-[5px]"
                 />
               </div>
               <span className={command.color}>{command.response}</span>
             </>
           ))}
           <div className="text-white flex flex-wrap">
-            <span>{directoryPath}</span>
+            <span>
+              user@macbook{" "}
+              {directoryPath === "home"
+                ? "~"
+                : directoryPath.split("/")[
+                    directoryPath.split("/").length - 1
+                  ]}{" "}
+              %
+            </span>
             <textarea
               ref={textareaRef}
               value={inputValue}
