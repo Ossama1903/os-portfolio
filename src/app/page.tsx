@@ -8,6 +8,7 @@ import { useState } from "react";
 export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState<boolean>(false);
   const [isResumeOpen, setIsResumeOpen] = useState<boolean>(false);
+  const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
 
   return (
     <main
@@ -17,6 +18,7 @@ export default function Home() {
       <Taskbar
         setIsTerminalOpen={setIsTerminalOpen}
         setIsResumeOpen={setIsResumeOpen}
+        setIsContactOpen={setIsContactOpen}
       />
       {isTerminalOpen && <Terminal />}
     </main>
