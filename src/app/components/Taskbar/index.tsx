@@ -1,5 +1,6 @@
 import Contact from "@/app/icon-components/Contact";
 import Projects from "@/app/icon-components/Projects";
+import ReadMe from "@/app/icon-components/ReadMe";
 import Resume from "@/app/icon-components/Resume";
 import Terminal from "@/app/icon-components/Terminal";
 
@@ -8,6 +9,7 @@ interface TaskbarProps {
   setIsResumeOpen: (isOpen: boolean) => void;
   setIsContactOpen: (isOpen: boolean) => void;
   setIsProjectsOpen: (isOpen: boolean) => void;
+  setIsReadMeOpen: (isOpen: boolean) => void;
 }
 
 export default function Taskbar({
@@ -15,6 +17,7 @@ export default function Taskbar({
   setIsResumeOpen,
   setIsContactOpen,
   setIsProjectsOpen,
+  setIsReadMeOpen,
 }: TaskbarProps) {
   return (
     <div className="flex justify-center">
@@ -23,6 +26,7 @@ export default function Taskbar({
         <Resume clickHandler={() => setIsResumeOpen(true)} />
         <Contact clickHandler={() => setIsContactOpen(true)} />
         <Projects clickHandler={() => setIsProjectsOpen(true)} />
+        <ReadMe clickHandler={() => setIsReadMeOpen(true)} />
       </div>
     </div>
   );

@@ -24,9 +24,9 @@ export default function Icon({
   return (
     <div className="relative flex flex-col items-center justify-center mx-auto">
       {isHovered && (
-        <div className="absolute bottom-full mb-2 bg-black text-white text-xs p-1 rounded">
+        <span className="absolute bottom-full mb-2 bg-black text-white inline-block text-xs p-1 rounded">
           {hoverText}
-        </div>
+        </span>
       )}
       <Image
         onClick={clickHandler}
