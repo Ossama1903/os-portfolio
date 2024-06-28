@@ -10,8 +10,8 @@ export default function Contact({ clickHandler }: ContactProps) {
       clickHandler={clickHandler}
       imageSource="/images/contact.png"
       alt="contact"
-      width={50}
-      height={50}
+      width={48}
+      height={48}
       hoverText="Contact"
     />
   );

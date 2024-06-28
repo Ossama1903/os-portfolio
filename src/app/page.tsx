@@ -9,6 +9,7 @@ export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState<boolean>(false);
   const [isResumeOpen, setIsResumeOpen] = useState<boolean>(false);
   const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
+  const [isProjectsOpen, setIsProjectsOpen] = useState<boolean>(false);
 
   return (
     <main
@@ -19,6 +20,7 @@ export default function Home() {
         setIsTerminalOpen={setIsTerminalOpen}
         setIsResumeOpen={setIsResumeOpen}
         setIsContactOpen={setIsContactOpen}
+        setIsProjectsOpen={setIsProjectsOpen}
       />
       {isTerminalOpen && <Terminal />}
     </main>
