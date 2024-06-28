@@ -7,13 +7,17 @@ import { useState } from "react";
 
 export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState<boolean>(false);
+  const [isResumeOpen, setIsResumeOpen] = useState<boolean>(false);
 
   return (
     <main
       className="h-[100dvh] bg-cover bg-center"
       style={{ backgroundImage: "url(/images/wallpaper.jpg)" }}
     >
-      <Taskbar setIsTerminalOpen={setIsTerminalOpen} />
+      <Taskbar
+        setIsTerminalOpen={setIsTerminalOpen}
+        setIsResumeOpen={setIsResumeOpen}
+      />
       {isTerminalOpen && <Terminal />}
     </main>
   );
